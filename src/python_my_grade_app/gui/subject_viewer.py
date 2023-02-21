@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QGroupBox, QGridLayout, QLabel, QLineEdit, QVBoxLayout
+from .new_subject_dialog import New_subject_dialog
 
 
 class Gui_Application(QWidget):
@@ -20,11 +21,11 @@ class Gui_Application(QWidget):
         self.text_semestry.setText(current["semestry"])
         self.text_professor.setText(current["professor"])
         self.text_grade.setText(str(current["grade"]))
-    
+
     def advance_subject(self):
         self.logic.advance()
         self.update_subject()
-    
+
     def back_subject(self):
         self.logic.back()
         self.update_subject()
@@ -51,16 +52,15 @@ class Gui_Application(QWidget):
         self.tag_grade = QLabel('Grade')
         self.text_grade = QLineEdit()
 
-        distribution_box_subject.addWidget(self.tag_name, 0,0)
-        distribution_box_subject.addWidget(self.tag_semestry, 1,0)
-        distribution_box_subject.addWidget(self.tag_professor, 2,0)
-        distribution_box_subject.addWidget(self.tag_grade, 3,0)
+        distribution_box_subject.addWidget(self.tag_name, 0, 0)
+        distribution_box_subject.addWidget(self.tag_semestry, 1, 0)
+        distribution_box_subject.addWidget(self.tag_professor, 2, 0)
+        distribution_box_subject.addWidget(self.tag_grade, 3, 0)
 
-        distribution_box_subject.addWidget(self.text_name, 0,1)
-        distribution_box_subject.addWidget(self.text_semestry, 1,1)
-        distribution_box_subject.addWidget(self.text_professor, 2,1)
-        distribution_box_subject.addWidget(self.text_grade, 3,1)
-
+        distribution_box_subject.addWidget(self.text_name, 0, 1)
+        distribution_box_subject.addWidget(self.text_semestry, 1, 1)
+        distribution_box_subject.addWidget(self.text_professor, 2, 1)
+        distribution_box_subject.addWidget(self.text_grade, 3, 1)
 
         self.box_buttons = QGroupBox()
         distribution_box_buttons = QHBoxLayout()
@@ -71,9 +71,12 @@ class Gui_Application(QWidget):
         self.back_button.clicked.connect(self.back_subject)
         self.advance_button = QPushButton("➡️")
         self.advance_button.clicked.connect(self.advance_subject)
+        self.new_subject_button = QPushButton("New Subject")
+        self.new_subject_button.clicked.connect(self.new_dialog_subject)
 
         distribution_box_buttons.addWidget(self.back_button)
         distribution_box_buttons.addWidget(self.advance_button)
+        distribution_box_buttons.addWidget(self.new_subject_button)
 
         self.vertical_distribution.addWidget(self.box_subject)
         self.vertical_distribution.addWidget(self.box_buttons)
@@ -81,3 +84,8 @@ class Gui_Application(QWidget):
         self.setLayout(self.vertical_distribution)
 
         self.show()
+    
+    def new_dialog_subject(self):
+        dialog = New_subject_dialog()
+        if dialog.exec_():
+            self.logic.add_subject(dialog.get_values())

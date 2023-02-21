@@ -21,3 +21,6 @@ class subject_organizer():
     def back(self):
         self.current -= 1
         self.current = self.current % len(self.subjects_list)
+
+    def add_subject(self, new_subject):
+        self.subjects_list.append(new_subject)

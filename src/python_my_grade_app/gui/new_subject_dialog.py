@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDialogButtonBox, QDialogButtonBox, QGroupBox, QGridLayout, QLabel, QLineEdit, QComboBox
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QDialogButtonBox, QDialogButtonBox, QGroupBox, QGridLayout, QLabel, QLineEdit, QComboBox, QMessageBox
 
 
 class New_subject_dialog(QDialog):
@@ -54,3 +54,25 @@ class New_subject_dialog(QDialog):
             "professor": self.text_professor.text(),
             "grade": float(self.text_grade.text())
         }
+    
+    def accept(self):
+        confirm_dialog = QMessageBox()
+        confirm_dialog.setIcon(QMessageBox.Question)
+        confirm_dialog.setText("Are you sure that you want to save the data as a new subject?")
+        confirm_dialog.setWindowTitle('Confirm')
+        confirm_dialog.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        if self.value_verified() and confirm_dialog.exec_() == QMessageBox.Yes:
+            super().accept()
+        else:
+            super().reject()
+    
+    def value_verified(self):
+        if self.text_name.text() == "" or self.text_professor.text() == "" or self.text_grade.text() == "":
+            error_dialog = QMessageBox()
+            error_dialog.setIcon(QMessageBox.Critical)
+            error_dialog.setText("The new subject fields cannot be empty")
+            error_dialog.setWindowTitle("Error")
+            error_dialog.setStandardButtons(QMessageBox.Ok)
+            error_dialog.exec_()
+            return False
+        return True

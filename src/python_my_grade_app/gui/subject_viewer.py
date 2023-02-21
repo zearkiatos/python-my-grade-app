@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QGroupBox, QGridL
 
 
 class Gui_Application(QWidget):
-    def __init__(self):
+    def __init__(self, logic):
         super().__init__()
 
         self.title = 'My Application'
@@ -11,6 +11,15 @@ class Gui_Application(QWidget):
         self.width = 300
         self.height = 320
         self.initialize_gui()
+        self.logic = logic
+        self.update_subject()
+
+    def update_subject(self):
+        current = self.logic.get_current_subject()
+        self.text_name.setText(current["name"])
+        self.text_semestry.setText(current["semestry"])
+        self.text_professor.setText(current["professor"])
+        self.text_grade.setText(str(current["grade"]))
 
     def initialize_gui(self):
         self.setWindowTitle(self.title)
@@ -31,18 +40,18 @@ class Gui_Application(QWidget):
         self.tag_professor = QLabel('Professor')
         self.text_professor = QLineEdit()
 
-        self.tag_note = QLabel('Note')
-        self.text_note = QLineEdit()
+        self.tag_grade = QLabel('Grade')
+        self.text_grade = QLineEdit()
 
         distribution_box_subject.addWidget(self.tag_name, 0,0)
         distribution_box_subject.addWidget(self.tag_semestry, 1,0)
         distribution_box_subject.addWidget(self.tag_professor, 2,0)
-        distribution_box_subject.addWidget(self.tag_note, 3,0)
+        distribution_box_subject.addWidget(self.tag_grade, 3,0)
 
         distribution_box_subject.addWidget(self.text_name, 0,1)
         distribution_box_subject.addWidget(self.text_semestry, 1,1)
         distribution_box_subject.addWidget(self.text_professor, 2,1)
-        distribution_box_subject.addWidget(self.text_note, 3,1)
+        distribution_box_subject.addWidget(self.text_grade, 3,1)
 
 
         self.box_buttons = QGroupBox()

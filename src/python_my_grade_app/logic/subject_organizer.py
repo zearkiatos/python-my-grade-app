@@ -20,4 +20,4 @@ class subject_organizer():
 
     def back(self):
         self.current -= 1
-        self.current self.current % len(self.subjects_list)
+        self.current = self.current % len(self.subjects_list)

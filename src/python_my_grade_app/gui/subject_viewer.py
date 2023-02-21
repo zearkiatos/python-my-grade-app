@@ -20,6 +20,14 @@ class Gui_Application(QWidget):
         self.text_semestry.setText(current["semestry"])
         self.text_professor.setText(current["professor"])
         self.text_grade.setText(str(current["grade"]))
+    
+    def advance_subject(self):
+        self.logic.advance()
+        self.update_subject()
+    
+    def back_subject(self):
+        self.logic.back()
+        self.update_subject()
 
     def initialize_gui(self):
         self.setWindowTitle(self.title)
@@ -56,10 +64,13 @@ class Gui_Application(QWidget):
 
         self.box_buttons = QGroupBox()
         distribution_box_buttons = QHBoxLayout()
+        self.box_buttons.setFixedHeight(50)
         self.box_buttons.setLayout(distribution_box_buttons)
 
         self.back_button = QPushButton("⬅️")
+        self.back_button.clicked.connect(self.back_subject)
         self.advance_button = QPushButton("➡️")
+        self.advance_button.clicked.connect(self.advance_subject)
 
         distribution_box_buttons.addWidget(self.back_button)
         distribution_box_buttons.addWidget(self.advance_button)
